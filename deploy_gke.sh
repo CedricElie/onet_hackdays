@@ -21,7 +21,7 @@ authenticate_gcloud() {
     echo "--- Authenticating with gcloud ---"
     if command_exists gcloud; then
         echo "Attempting to log in. A browser window may open for authentication."
-        #gcloud auth login --no-launch-browser # Use --no-launch-browser if you're on a headless server and want to copy-paste the URL
+        gcloud auth login --no-launch-browser # Use --no-launch-browser if you're on a headless server and want to copy-paste the URL
         if [ $? -eq 0 ]; then
             echo "gcloud authentication successful."
             return 0
@@ -103,7 +103,7 @@ create_gke() {
     gcloud container clusters create $GKE_CLUSTER \
     --region=$PROJECT_REGION \
     --machine-type=e2-medium \
-    --network=$PROJECT_VPC \
+    #--network=$PROJECT_VPC \
     --enable-autoscaling --min-nodes=3 --max-nodes=10 \
     --enable-ip-alias \
     --num-nodes=2 \
