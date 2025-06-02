@@ -22,6 +22,12 @@ proxy: edge
 ingress:
   enabled: true
   hostname: keycloak.onet.bigtree.space
+  annotations: 
+    cert-manager.io/cluster-issuer: "letsencrypt"
+  extraTls:
+  - hosts:
+      - keycloak.onet.bigtree.space
+    secretName: keycloak-tls
 extraDeploy:
 - apiVersion: v1
   kind: ConfigMap

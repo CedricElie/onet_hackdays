@@ -6,6 +6,7 @@ image:
 backend:
   replicas: 1
   envVars:
+    SSL_VERIFY: false
     COLLABORATION_API_URL: https://impress.onet.bigtree.space/collaboration/api/
     COLLABORATION_SERVER_SECRET: my-secret
     DJANGO_CSRF_TRUSTED_ORIGINS: https://impress.onet.bigtree.space
@@ -131,31 +132,57 @@ posthog:
 ingress:
   enabled: true
   host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 ingressCollaborationWS:
   enabled: true
   host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-collab-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
   
   annotations:
     nginx.ingress.kubernetes.io/auth-url: https://impress.onet.bigtree.space/api/v1.0/documents/collaboration-auth/
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 ingressCollaborationApi:
   enabled: true
   host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-collab-api-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 ingressAdmin:
   enabled: true
   host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-admin-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 ingressMedia:
   enabled: true
   host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-media-tls
+  enabled: true
 
   annotations:
     nginx.ingress.kubernetes.io/auth-url: https://impress.onet.bigtree.space/api/v1.0/documents/media-auth/
     nginx.ingress.kubernetes.io/auth-response-headers: "Authorization, X-Amz-Date, X-Amz-Content-SHA256"
     nginx.ingress.kubernetes.io/upstream-vhost: minio.impress.svc.cluster.local:9000
     nginx.ingress.kubernetes.io/rewrite-target: /impress-media-storage/$1
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 serviceMedia:
   host: minio.impress.svc.cluster.local
