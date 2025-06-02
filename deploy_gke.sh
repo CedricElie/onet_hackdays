@@ -3,11 +3,12 @@
 #Connect and deploy GKE
 # --- Configuration ---
 # Replace with your actual Google Cloud Project ID
-PROJECT_ID="prj-dil-hackdays-sbx-6ce1" 
-PROJECT_REGION="europe-west9"
-PROJECT_ZONE="europe-west9-a"
-PROJECT_VPC="onet-vpc-$PROJECT_ID"
-GKE_CLUSTER="onet-gke-$PROJECT_ID-std"
+PROJECT_ID="s3ns:dtshr-hackdays2025"
+PROJECT_NAME="dtshr-hackdays2025"
+PROJECT_REGION="u-france-east1"
+PROJECT_ZONE="u-france-east1-a"
+PROJECT_VPC="onet-vpc-$PROJECT_NAME"
+GKE_CLUSTER="onet-gke-$PROJECT_NAME-std"
 
 # --- Functions ---
 
@@ -21,7 +22,7 @@ authenticate_gcloud() {
     echo "--- Authenticating with gcloud ---"
     if command_exists gcloud; then
         echo "Attempting to log in. A browser window may open for authentication."
-        gcloud auth login --no-launch-browser # Use --no-launch-browser if you're on a headless server and want to copy-paste the URL
+        #gcloud auth login --no-launch-browser # Use --no-launch-browser if you're on a headless server and want to copy-paste the URL
         if [ $? -eq 0 ]; then
             echo "gcloud authentication successful."
             return 0
@@ -72,16 +73,16 @@ create_vpc() {
     fi
 
     echo "Enabling firewall rules"
-    gcloud compute firewall-rules create $PROJECT_VPC --network onet-vpc-prj-dil-hackdays-sbx-6ce1 --allow tcp,udp,icmp 
+    gcloud compute firewall-rules create $PROJECT_VPC --network $PROJECT_VPC --allow tcp,udp,icmp
 
 }
 # Function to perform example gcloud operations
 create_gke() {
     echo "--- Enabling APIs ---"
-    gcloud services enable container.googleapis.com
-    gcloud services enable compute.googleapis.com
-    gcloud services enable artifactregistry.googleapis.com
-    gcloud services enable containerregistry.googleapis.com
+    # gcloud services enable container.googleapis.com
+    # gcloud services enable compute.googleapis.com
+    # gcloud services enable artifactregistry.googleapis.com
+    # gcloud services enable containerregistry.googleapis.com
 
     if [ $? -eq 0 ]; then 
         echo "API enabled successfully"
@@ -102,8 +103,8 @@ create_gke() {
     echo "Cluster to be created : $GKE_CLUSTER"
     gcloud container clusters create $GKE_CLUSTER \
     --region=$PROJECT_REGION \
-    --machine-type=e2-medium \
-    #--network=$PROJECT_VPC \
+    --machine-type=c3-standard-4 \
+    --network=$PROJECT_VPC \
     --enable-autoscaling --min-nodes=3 --max-nodes=10 \
     --enable-ip-alias \
     --num-nodes=2 \
@@ -116,7 +117,7 @@ create_gke() {
     fi
 
     # Get the cluster's credentials
-    gcloud container clusters get-credentials $GKE_CLUSTER --zone=$PROJECT_ZONE
+    gcloud container clusters get-credentials $GKE_CLUSTER --region=$PROJECT_REGION
 
     # Verify the cluster
     kubectl get nodes
