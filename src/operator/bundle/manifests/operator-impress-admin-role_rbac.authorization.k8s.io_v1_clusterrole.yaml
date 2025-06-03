@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: operator
+  name: operator-impress-admin-role
+rules:
+- apiGroups:
+  - app.onet.bigtree.space
+  resources:
+  - impresses
+  verbs:
+  - '*'
+- apiGroups:
+  - app.onet.bigtree.space
+  resources:
+  - impresses/status
+  verbs:
+  - get

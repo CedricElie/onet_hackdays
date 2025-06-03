@@ -1,0 +1,6 @@
+# Use the 'create api' subcommand to add watches to this file.
+- group: app.onet.bigtree.space
+  version: v1alpha1
+  kind: Impress
+  chart: helm-charts/docs
+# +kubebuilder:scaffold:watch
