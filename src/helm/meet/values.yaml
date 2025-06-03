@@ -1,18 +1,18 @@
-# Default values for impress.
+# Default values for meet.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 ## @section General configuration
 
-## @param image.repository Repository to use to pull impress's container image
-## @param image.tag impress's container tag
+## @param image.repository Repository to use to pull meet's container image
+## @param image.tag meet's container tag
 ## @param image.pullPolicy Container image pull policy
 ## @extra image.credentials.username Username for container registry authentication
 ## @extra image.credentials.password Password for container registry authentication
 ## @extra image.credentials.registry Registry url for which the credentials are specified
 ## @extra image.credentials.name Name of the generated secret for imagePullSecrets
 image:
-  repository: lasuite/impress-backend
+  repository: lasuite/meet-backend
   pullPolicy: IfNotPresent
   tag: "latest"
 
@@ -32,87 +32,21 @@ commonEnvVars: &commonEnvVars
 ingress:
   enabled: false
   className: null
-  host: impress.example.com
+  host: meet.example.com
   path: /
   ## @param ingress.hosts Additional host to configure for the Ingress
   hosts: []
   #  - chart-example.local
   ## @param ingress.tls.enabled Weather to enable TLS for the Ingress
-  ## @param ingress.tls.secretName Secret name for TLS config
   ## @skip ingress.tls.additional
   ## @extra ingress.tls.additional[].secretName Secret name for additional TLS config
   ## @extra ingress.tls.additional[].hosts[] Hosts for additional TLS config
   tls:
     enabled: true
-    secretName: null
     additional: []
 
   ## @param ingress.customBackends Add custom backends to ingress
   customBackends: []
-
-## @param ingressCollaborationWS.enabled whether to enable the Ingress or not
-## @param ingressCollaborationWS.className IngressClass to use for the Ingress
-## @param ingressCollaborationWS.host Host for the Ingress
-## @param ingressCollaborationWS.path Path to use for the Ingress
-ingressCollaborationWS:
-  enabled: false
-  className: null
-  host: impress.example.com
-  path: /collaboration/ws/
-  ## @param ingressCollaborationWS.hosts Additional host to configure for the Ingress
-  hosts: []
-  #  - chart-example.local
-  ## @param ingressCollaborationWS.tls.enabled Weather to enable TLS for the Ingress
-  ## @param ingressCollaborationWS.tls.secretName Secret name for TLS config
-  ## @skip ingressCollaborationWS.tls.additional
-  ## @extra ingressCollaborationWS.tls.additional[].secretName Secret name for additional TLS config
-  ## @extra ingressCollaborationWS.tls.additional[].hosts[] Hosts for additional TLS config
-  tls:
-    enabled: true
-    secretName: null
-    additional: []
-
-  ## @param ingressCollaborationWS.customBackends Add custom backends to ingress
-  customBackends: []
-
-  ## @param ingressCollaborationWS.annotations.nginx.ingress.kubernetes.io/enable-websocket
-  ## @param ingressCollaborationWS.annotations.nginx.ingress.kubernetes.io/proxy-read-timeout
-  ## @param ingressCollaborationWS.annotations.nginx.ingress.kubernetes.io/proxy-send-timeout
-  ## @param ingressCollaborationWS.annotations.nginx.ingress.kubernetes.io/upstream-hash-by
-  annotations:
-    nginx.ingress.kubernetes.io/enable-websocket: "true"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "86400"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "86400"
-    nginx.ingress.kubernetes.io/upstream-hash-by: $arg_room
-
-## @param ingressCollaborationApi.enabled whether to enable the Ingress or not
-## @param ingressCollaborationApi.className IngressClass to use for the Ingress
-## @param ingressCollaborationApi.host Host for the Ingress
-## @param ingressCollaborationApi.path Path to use for the Ingress
-ingressCollaborationApi:
-  enabled: false
-  className: null
-  host: impress.example.com
-  path: /collaboration/api/
-  ## @param ingressCollaborationApi.hosts Additional host to configure for the Ingress
-  hosts: []
-  #  - chart-example.local
-  ## @param ingressCollaborationApi.tls.enabled Weather to enable TLS for the Ingress
-  ## @param ingressCollaborationApi.tls.secretName Secret name for TLS config
-  ## @skip ingressCollaborationApi.tls.additional
-  ## @extra ingressCollaborationApi.tls.additional[].secretName Secret name for additional TLS config
-  ## @extra ingressCollaborationApi.tls.additional[].hosts[] Hosts for additional TLS config
-  tls:
-    enabled: true
-    secretName: null
-    additional: []
-
-  ## @param ingressCollaborationApi.customBackends Add custom backends to ingress
-  customBackends: []
-
-  ## @param ingressCollaborationApi.annotations.nginx.ingress.kubernetes.io/upstream-hash-by
-  annotations:
-    nginx.ingress.kubernetes.io/upstream-hash-by: $arg_room
 
 
 ## @param ingressAdmin.enabled whether to enable the Ingress or not
@@ -122,19 +56,17 @@ ingressCollaborationApi:
 ingressAdmin:
   enabled: false
   className: null
-  host: impress.example.com
+  host: meet.example.com
   path: /admin
   ## @param ingressAdmin.hosts Additional host to configure for the Ingress
   hosts: [ ]
   #  - chart-example.local
   ## @param ingressAdmin.tls.enabled Weather to enable TLS for the Ingress
-  ## @param ingressAdmin.tls.secretName Secret name for TLS config
   ## @skip ingressAdmin.tls.additional
   ## @extra ingressAdmin.tls.additional[].secretName Secret name for additional TLS config
   ## @extra ingressAdmin.tls.additional[].hosts[] Hosts for additional TLS config
   tls:
     enabled: true
-    secretName: null
     additional: []
 
 ## @param ingressMedia.enabled whether to enable the Ingress or not
@@ -144,7 +76,7 @@ ingressAdmin:
 ingressMedia:
   enabled: false
   className: null
-  host: impress.example.com
+  host: meet.example.com
   path: /media/(.*)
   ## @param ingressMedia.hosts Additional host to configure for the Ingress
   hosts: [ ]
@@ -164,9 +96,9 @@ ingressMedia:
   ## @param ingressMedia.annotations.nginx.ingress.kubernetes.io/upstream-vhost
   ## @param ingressMedia.annotations.nginx.ingress.kubernetes.io/configuration-snippet
   annotations:
-    nginx.ingress.kubernetes.io/auth-url: https://impress.example.com/api/v1.0/documents/media-auth/
+    nginx.ingress.kubernetes.io/auth-url: https://meet.example.com/api/v1.0/recordings/media-auth/
     nginx.ingress.kubernetes.io/auth-response-headers: "Authorization, X-Amz-Date, X-Amz-Content-SHA256"
-    nginx.ingress.kubernetes.io/upstream-vhost: minio.impress.svc.cluster.local:9000
+    nginx.ingress.kubernetes.io/upstream-vhost: minio.meet.svc.cluster.local:9000
     nginx.ingress.kubernetes.io/configuration-snippet: |
       add_header Content-Security-Policy "default-src 'none'" always;
 
@@ -174,14 +106,17 @@ ingressMedia:
 ## @param serviceMedia.port
 ## @param serviceMedia.annotations
 serviceMedia:
-  host: minio.impress.svc.cluster.local
+  host: minio.meet.svc.cluster.local
   port: 9000
   annotations: {}
+
 
 
 ## @section backend
 
 backend:
+  ## @param backend.dpAnnotations Annotations to add to the backend Deployment
+  dpAnnotations: {}
 
   ## @param backend.command Override the backend container command
   command: []
@@ -190,7 +125,7 @@ backend:
   args: []
 
   ## @param backend.replicas Amount of backend replicas
-  replicas: 1
+  replicas: 3
 
   ## @param backend.shareProcessNamespace Enable share process namespace between containers
   shareProcessNamespace: false
@@ -217,9 +152,6 @@ backend:
   ## @param backend.podAnnotations Annotations to add to the backend Pod
   podAnnotations: {}
 
-  ## @param backend.dpAnnotations Annotations to add to the backend Deployment
-  dpAnnotations: {}
-
   ## @param backend.service.type backend Service type
   ## @param backend.service.port backend Service listening port
   ## @param backend.service.targetPort backend container listening port
@@ -230,8 +162,8 @@ backend:
     targetPort: 8000
     annotations: {}
 
- ## @param backend.migrate.command backend migrate command
- ## @param backend.migrate.restartPolicy backend migrate job restart policy
+  ## @param backend.migrate.command backend migrate command
+  ## @param backend.migrate.restartPolicy backend migrate job restart policy
   migrate:
     command:
       - "python"
@@ -240,8 +172,8 @@ backend:
       - "--no-input"
     restartPolicy: Never
 
- ## @param backend.createsuperuser.command backend migrate command
- ## @param backend.createsuperuser.restartPolicy backend migrate job restart policy
+  ## @param backend.createsuperuser.command backend migrate command
+  ## @param backend.createsuperuser.restartPolicy backend migrate job restart policy
   createsuperuser:
     command:
       - "/bin/sh"
@@ -249,19 +181,6 @@ backend:
       - |
         python manage.py createsuperuser --email $DJANGO_SUPERUSER_EMAIL --password $DJANGO_SUPERUSER_PASSWORD
     restartPolicy: Never
-
-  ## @extra backend.job job dedicated to run a random management command, for example after a deployment
-  ## @param backend.job.name The name to use to describe this job
-  ## @param backend.job.command The management command to execute
-  ## @param backend.job.restartPolicy The restart policy for the job.
-  ## @extra backend.job.annotations Annotations to add to the job [default: argocd.argoproj.io/hook: PostSync]
-  ## @skip backend.job.annotations.argocd.argoproj.io/hook
-  job:
-    name: ""
-    command: []
-    restartPolicy: Never
-    annotations: 
-      argocd.argoproj.io/hook: PostSync
 
   ## @param backend.probes.liveness.path [nullable] Configure path for backend HTTP liveness probe
   ## @param backend.probes.liveness.targetPort [nullable] Configure port for backend HTTP liveness probe
@@ -278,10 +197,10 @@ backend:
   probes:
     liveness:
       path: /__heartbeat__
-      initialDelaySeconds: 10
+      initialDelaySeconds: 30
     readiness:
       path: /__lbheartbeat__
-      initialDelaySeconds: 10
+      initialDelaySeconds: 30
 
   ## @param backend.resources Resource requirements for the backend container
   resources: {}
@@ -311,54 +230,19 @@ backend:
   pdb:
     enabled: true
 
-  ## @param backend.themeCustomization.enabled Enable theme customization
-  ## @param backend.themeCustomization.file_content Content of the theme customization file. Must be a json object.
-  ## @param backend.themeCustomization.mount_path Path where the customization file will be mounted in the backend deployment.
-  themeCustomization:
-    enabled: false
-    file_content: ""
-    mount_path: /app/impress/configuration/theme
-
-
-  ## @param backend.celery.replicas Amount of celery replicas
-  ## @param backend.celery.command Override the celery container command
-  ## @param backend.celery.args Override the celery container args
-  ## @param backend.celery.resources Resource requirements for the celery container
-  ## @param backend.celery.probes.liveness.exec.command Override the celery container liveness probe command
-  ## @param backend.celery.probes.liveness.initialDelaySeconds Initial delay for the celery container liveness probe
-  ## @param backend.celery.probes.liveness.timeoutSeconds Timeout for the celery container liveness probe
-  ## @param backend.celery.probes.readiness.exec.command Override the celery container readiness probe command
-  ## @param backend.celery.probes.readiness.initialDelaySeconds Initial delay for the celery container readiness probe
-  ## @param backend.celery.probes.readiness.timeoutSeconds Timeout for the celery container readiness probe
-  celery:
-    replicas: 1
-    command: []
-    args: ["celery", "-A", "impress.celery_app", "worker", "-l", "INFO", "-n", "impress@%h"]
-    resources: {}
-    probes:
-      liveness:
-        exec:
-          command: ["/bin/sh", "-c", "celery -A impress.celery_app inspect ping -d impress@$HOSTNAME"]
-        initialDelaySeconds: 60
-        timeoutSeconds: 5
-      readiness:
-        exec:
-          command: ["/bin/sh", "-c", "celery -A impress.celery_app inspect ping -d impress@$HOSTNAME"]
-        initialDelaySeconds: 15
-        timeoutSeconds: 5
-
-
-
 ## @section frontend
 
 frontend:
-  ## @param frontend.image.repository Repository to use to pull impress's frontend container image
-  ## @param frontend.image.tag impress's frontend container tag
+  ## @param frontend.image.repository Repository to use to pull meet's frontend container image
+  ## @param frontend.image.tag meet's frontend container tag
   ## @param frontend.image.pullPolicy frontend container image pull policy
   image:
-    repository: lasuite/impress-frontend
+    repository: lasuite/meet-frontend
     pullPolicy: IfNotPresent
     tag: "latest"
+
+  ## @param frontend.dpAnnotations Annotations to add to the frontend Deployment
+  dpAnnotations: {}
 
   ## @param frontend.command Override the frontend container command
   command: []
@@ -367,7 +251,7 @@ frontend:
   args: []
 
   ## @param frontend.replicas Amount of frontend replicas
-  replicas: 1
+  replicas: 3
 
   ## @param frontend.shareProcessNamespace Enable share process namefrontend between containers
   shareProcessNamespace: false
@@ -390,9 +274,6 @@ frontend:
 
   ## @param frontend.podAnnotations Annotations to add to the frontend Pod
   podAnnotations: {}
-
-  ## @param frontend.dpAnnotations Annotations to add to the frontend Deployment
-  dpAnnotations: {}
 
   ## @param frontend.service.type frontend Service type
   ## @param frontend.service.port frontend Service listening port
@@ -463,7 +344,7 @@ posthog:
   ingress:
     enabled: false
     className: null
-    host: impress.example.com
+    host: meet.example.com
     path: /
     hosts: [ ]
     tls:
@@ -476,7 +357,7 @@ posthog:
   ## @param posthog.ingressAssets.enabled Enable or disable the ingress resource creation
   ## @param posthog.ingressAssets.className Kubernetes ingress class name to use (e.g., nginx, traefik)
   ## @param posthog.ingressAssets.host Primary hostname for the ingress resource
-  ## @param posthog.ingressAssets.paths URL paths prefix for the ingress routes (e.g., /static)
+  ## @param posthog.ingressAssets.path URL path prefix for the ingress routes (e.g., /)
   ## @param posthog.ingressAssets.hosts Additional hostnames array to be included in the ingress
   ## @param posthog.ingressAssets.tls.enabled Enable or disable TLS/HTTPS for the ingress
   ## @param posthog.ingressAssets.tls.additional Additional TLS configurations for extra hosts/certificates
@@ -485,10 +366,8 @@ posthog:
   ingressAssets:
     enabled: false
     className: null
-    host: impress.example.com
-    paths:
-    - /static
-    - /array
+    host: meet.example.com
+    path: /static
     hosts: [ ]
     tls:
       enabled: true
@@ -518,107 +397,201 @@ posthog:
     annotations: {}
 
 
-## @section yProvider
+## @section summary
 
-yProvider:
-  ## @param yProvider.image.repository Repository to use to pull impress's yProvider container image
-  ## @param yProvider.image.tag impress's yProvider container tag
-  ## @param yProvider.image.pullPolicy yProvider container image pull policy
-  image:
-    repository: lasuite/impress-y-provider
-    pullPolicy: IfNotPresent
-    tag: "latest"
+summary:
 
-  ## @param yProvider.command Override the yProvider container command
+  ## @param summary.dpAnnotations Annotations to add to the summary Deployment
+  dpAnnotations: {}
+
+  ## @param summary.command Override the summary container command
   command: []
 
-  ## @param yProvider.args Override the yProvider container args
+  ## @param summary.args Override the summary container args
   args: []
 
-  ## @param yProvider.replicas Amount of yProvider replicas
+  ## @param summary.replicas Amount of summary replicas
   replicas: 1
 
-  ## @param yProvider.shareProcessNamespace Enable share process nameyProvider between containers
+  ## @param summary.shareProcessNamespace Enable share process namespace between containers
   shareProcessNamespace: false
 
-  ## @param yProvider.sidecars Add sidecars containers to yProvider deployment
+  ## @param summary.sidecars Add sidecars containers to summary deployment
   sidecars: []
 
-  ## @param yProvider.securityContext Configure yProvider Pod security context
+  ## @param summary.migrateJobAnnotations Annotations for the migrate job
+  migrateJobAnnotations: {}
+
+  ## @param summary.securityContext Configure summary Pod security context
   securityContext: null
 
-  ## @param yProvider.envVars Configure yProvider container environment variables
-  ## @extra yProvider.envVars.BY_VALUE Example environment variable by setting value directly
-  ## @extra yProvider.envVars.FROM_CONFIGMAP.configMapKeyRef.name Name of a ConfigMap when configuring env vars from a ConfigMap
-  ## @extra yProvider.envVars.FROM_CONFIGMAP.configMapKeyRef.key Key within a ConfigMap when configuring env vars from a ConfigMap
-  ## @extra yProvider.envVars.FROM_SECRET.secretKeyRef.name Name of a Secret when configuring env vars from a Secret
-  ## @extra yProvider.envVars.FROM_SECRET.secretKeyRef.key Key within a Secret when configuring env vars from a Secret
-  ## @skip yProvider.envVars
+  ## @param summary.envVars Configure summary container environment variables
+  ## @extra summary.envVars.BY_VALUE Example environment variable by setting value directly
+  ## @extra summary.envVars.FROM_CONFIGMAP.configMapKeyRef.name Name of a ConfigMap when configuring env vars from a ConfigMap
+  ## @extra summary.envVars.FROM_CONFIGMAP.configMapKeyRef.key Key within a ConfigMap when configuring env vars from a ConfigMap
+  ## @extra summary.envVars.FROM_SECRET.secretKeyRef.name Name of a Secret when configuring env vars from a Secret
+  ## @extra summary.envVars.FROM_SECRET.secretKeyRef.key Key within a Secret when configuring env vars from a Secret
+  ## @skip summary.envVars
   envVars:
     <<: *commonEnvVars
 
-  ## @param yProvider.podAnnotations Annotations to add to the yProvider Pod
+  ## @param summary.podAnnotations Annotations to add to the summary Pod
   podAnnotations: {}
 
-  ## @param yProvider.dpAnnotations Annotations to add to the yProvider Deployment
-  dpAnnotations: {}
-
-  ## @param yProvider.service.type yProvider Service type
-  ## @param yProvider.service.port yProvider Service listening port
-  ## @param yProvider.service.targetPort yProvider container listening port
-  ## @param yProvider.service.annotations Annotations to add to the yProvider Service
+  ## @param summary.service.type summary Service type
+  ## @param summary.service.port summary Service listening port
+  ## @param summary.service.targetPort summary container listening port
+  ## @param summary.service.annotations Annotations to add to the summary Service
   service:
     type: ClusterIP
-    port: 443
-    targetPort: 4444
+    port: 80
+    targetPort: 8000
     annotations: {}
 
-  ## @extra yProvider.probes.liveness.path Configure path for yProvider HTTP liveness probe
-  ## @extra yProvider.probes.liveness.targetPort Configure port for yProvider HTTP liveness probe
-  ## @extra yProvider.probes.liveness.initialDelaySeconds Configure initial delay for yProvider liveness probe
-  ## @extra yProvider.probes.liveness.initialDelaySeconds Configure timeout for yProvider liveness probe
-  ## @extra yProvider.probes.startup.path Configure path for yProvider HTTP startup probe
-  ## @extra yProvider.probes.startup.targetPort Configure port for yProvider HTTP startup probe
-  ## @extra yProvider.probes.startup.initialDelaySeconds Configure initial delay for yProvider startup probe
-  ## @extra yProvider.probes.startup.initialDelaySeconds Configure timeout for yProvider startup probe
-  ## @extra yProvider.probes.readiness.path Configure path for yProvider HTTP readiness probe
-  ## @extra yProvider.probes.readiness.targetPort Configure port for yProvider HTTP readiness probe
-  ## @extra yProvider.probes.readiness.initialDelaySeconds Configure initial delay for yProvider readiness probe
-  ## @extra yProvider.probes.readiness.initialDelaySeconds Configure timeout for yProvider readiness probe
+  ## @param summary.probes.liveness.path [nullable] Configure path for summary HTTP liveness probe
+  ## @param summary.probes.liveness.targetPort [nullable] Configure port for summary HTTP liveness probe
+  ## @param summary.probes.liveness.initialDelaySeconds [nullable] Configure initial delay for summary liveness probe
+  ## @param summary.probes.liveness.initialDelaySeconds [nullable] Configure timeout for summary liveness probe
+  ## @param summary.probes.startup.path [nullable] Configure path for summary HTTP startup probe
+  ## @param summary.probes.startup.targetPort [nullable] Configure port for summary HTTP startup probe
+  ## @param summary.probes.startup.initialDelaySeconds [nullable] Configure initial delay for summary startup probe
+  ## @param summary.probes.startup.initialDelaySeconds [nullable] Configure timeout for summary startup probe
+  ## @param summary.probes.readiness.path [nullable] Configure path for summary HTTP readiness probe
+  ## @param summary.probes.readiness.targetPort [nullable] Configure port for summary HTTP readiness probe
+  ## @param summary.probes.readiness.initialDelaySeconds [nullable] Configure initial delay for summary readiness probe
+  ## @param summary.probes.readiness.initialDelaySeconds [nullable] Configure timeout for summary readiness probe
   probes:
     liveness:
-      ## @param yProvider.probes.liveness.path
-      ## @param yProvider.probes.liveness.initialDelaySeconds
-      path: /ping
-      initialDelaySeconds: 10
+      path: /__heartbeat__
+      initialDelaySeconds: 30
+    readiness:
+      path: /__lbheartbeat__
+      initialDelaySeconds: 30
 
-  ## @param yProvider.resources Resource requirements for the yProvider container
+  ## @param summary.resources Resource requirements for the summary container
   resources: {}
 
-  ## @param yProvider.nodeSelector Node selector for the yProvider Pod
+  ## @param summary.nodeSelector Node selector for the summary Pod
   nodeSelector: {}
 
-  ## @param yProvider.tolerations Tolerations for the yProvider Pod
+  ## @param summary.tolerations Tolerations for the summary Pod
   tolerations: []
 
-  ## @param yProvider.affinity Affinity for the yProvider Pod
+  ## @param summary.affinity Affinity for the summary Pod
   affinity: {}
 
-  ## @param yProvider.persistence Additional volumes to create and mount on the yProvider. Used for debugging purposes
-  ## @extra yProvider.persistence.volume-name.size Size of the additional volume
-  ## @extra yProvider.persistence.volume-name.type Type of the additional volume, persistentVolumeClaim or emptyDir
-  ## @extra yProvider.persistence.volume-name.mountPath Path where the volume should be mounted to
+  ## @param summary.persistence Additional volumes to create and mount on the summary. Used for debugging purposes
+  ## @extra summary.persistence.volume-name.size Size of the additional volume
+  ## @extra summary.persistence.volume-name.type Type of the additional volume, persistentVolumeClaim or emptyDir
+  ## @extra summary.persistence.volume-name.mountPath Path where the volume should be mounted to
   persistence: {}
 
-  ## @param yProvider.extraVolumeMounts Additional volumes to mount on the yProvider.
+  ## @param summary.extraVolumeMounts Additional volumes to mount on the summary.
   extraVolumeMounts: []
 
-  ## @param yProvider.extraVolumes Additional volumes to mount on the yProvider.
+  ## @param summary.extraVolumes Additional volumes to mount on the summary.
   extraVolumes: []
 
-  ## @param yProvider.pdb.enabled Enable pdb on yProvider
+  ## @param summary.pdb.enabled Enable pdb on summary
   pdb:
     enabled: true
+
+## @section celery
+
+celery:
+  ## @param celery.dpAnnotations Annotations to add to the celery Deployment
+  dpAnnotations: {}
+
+  ## @param celery.command Override the celery container command
+  command: []
+
+  ## @param celery.args Override the celery container args
+  args: []
+
+  ## @param celery.replicas Amount of celery replicas
+  replicas: 1
+
+  ## @param celery.shareProcessNamespace Enable share process namespace between containers
+  shareProcessNamespace: false
+
+  ## @param celery.sidecars Add sidecars containers to celery deployment
+  sidecars: []
+
+  ## @param celery.migrateJobAnnotations Annotations for the migrate job
+  migrateJobAnnotations: {}
+
+  ## @param celery.securityContext Configure celery Pod security context
+  securityContext: null
+
+  ## @param celery.envVars Configure celery container environment variables
+  ## @extra celery.envVars.BY_VALUE Example environment variable by setting value directly
+  ## @extra celery.envVars.FROM_CONFIGMAP.configMapKeyRef.name Name of a ConfigMap when configuring env vars from a ConfigMap
+  ## @extra celery.envVars.FROM_CONFIGMAP.configMapKeyRef.key Key within a ConfigMap when configuring env vars from a ConfigMap
+  ## @extra celery.envVars.FROM_SECRET.secretKeyRef.name Name of a Secret when configuring env vars from a Secret
+  ## @extra celery.envVars.FROM_SECRET.secretKeyRef.key Key within a Secret when configuring env vars from a Secret
+  ## @skip celery.envVars
+  envVars:
+    <<: *commonEnvVars
+
+  ## @param celery.podAnnotations Annotations to add to the celery Pod
+  podAnnotations: {}
+
+  ## @param celery.service.type celery Service type
+  ## @param celery.service.port celery Service listening port
+  ## @param celery.service.targetPort celery container listening port
+  ## @param celery.service.annotations Annotations to add to the celery Service
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8000
+    annotations: {}
+
+  ## @param celery.probes Configure celery probes
+  ## @param celery.probes.liveness.path [nullable] Configure path for celery HTTP liveness probe
+  ## @param celery.probes.liveness.targetPort [nullable] Configure port for celery HTTP liveness probe
+  ## @param celery.probes.liveness.initialDelaySeconds [nullable] Configure initial delay for celery liveness probe
+  ## @param celery.probes.liveness.initialDelaySeconds [nullable] Configure timeout for celery liveness probe
+  ## @param celery.probes.startup.path [nullable] Configure path for celery HTTP startup probe
+  ## @param celery.probes.startup.targetPort [nullable] Configure port for celery HTTP startup probe
+  ## @param celery.probes.startup.initialDelaySeconds [nullable] Configure initial delay for celery startup probe
+  ## @param celery.probes.startup.initialDelaySeconds [nullable] Configure timeout for celery startup probe
+  ## @param celery.probes.readiness.path [nullable] Configure path for celery HTTP readiness probe
+  ## @param celery.probes.readiness.targetPort [nullable] Configure port for celery HTTP readiness probe
+  ## @param celery.probes.readiness.initialDelaySeconds [nullable] Configure initial delay for celery readiness probe
+  ## @param celery.probes.readiness.initialDelaySeconds [nullable] Configure timeout for celery readiness probe
+  probes: {}
+
+  ## @param celery.resources Resource requirements for the celery container
+  resources: {}
+
+  ## @param celery.nodeSelector Node selector for the celery Pod
+  nodeSelector: {}
+
+  ## @param celery.tolerations Tolerations for the celery Pod
+  tolerations: []
+
+  ## @param celery.affinity Affinity for the celery Pod
+  affinity: {}
+
+  ## @param celery.persistence Additional volumes to create and mount on the celery. Used for debugging purposes
+  ## @extra celery.persistence.volume-name.size Size of the additional volume
+  ## @extra celery.persistence.volume-name.type Type of the additional volume, persistentVolumeClaim or emptyDir
+  ## @extra celery.persistence.volume-name.mountPath Path where the volume should be mounted to
+  persistence: {}
+
+  ## @param celery.extraVolumeMounts Additional volumes to mount on the celery.
+  extraVolumeMounts: []
+
+  ## @param celery.extraVolumes Additional volumes to mount on the celery.
+  extraVolumes: []
+
+  ## @param celery.pdb.enabled Enable pdb on celery
+  pdb:
+    enabled: false
+redis: 
+  auth:
+    password: pass
+  architecture: standalone
 
 postgresql:
   fullnameOverride: "postgresql"
@@ -626,7 +599,51 @@ postgresql:
   auth:
     username: dinum
     password: pass
-    database: impress
+    database: meet
   tls:
     enabled: true
     autoGenerated: true
+
+livekit-server:
+  replicaCount: 1
+  terminationGracePeriodSeconds: 18000
+
+  livekit:
+    keys:
+        devkey: secret
+    log_level: debug
+    rtc:
+      use_external_ip: false
+      port_range_start: 50000
+      port_range_end: 60000
+      tcp_port: 7881
+    redis:
+      address: redis-master:6379
+      password: pass
+    turn:
+      enabled: true
+      udp_port: 443
+      domain: livekit.onet.bigtree.space
+      loadBalancerAnnotations: {}
+
+
+  loadBalancer:
+    type: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      cert-manager.io/cluster-issuer: "letsencrypt"
+    tls:
+      - hosts:
+          - livekit.onet.bigtree.space
+        secretName: livekit-tls
+      
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 60
+
+  nodeSelector: {}
+  resources: {}

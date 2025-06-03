@@ -1,0 +1,144 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+##
+## Base operator rules
+##
+# We need to get namespaces so the operator can read namespaces to ensure they exist
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+# We need to manage Helm release secrets
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - "*"
+# We need to create events on CRs about things happening during reconciliation
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+- apiGroups:
+  - "networking.k8s.io"
+  resources:
+  - ingresses
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+# test
+- apiGroups:
+  - "*"
+  resources:
+  - "*"
+  verbs:
+  - "*"
+
+##
+## Rules for app.onet.bigtree.space/v1alpha1, Kind: Impress
+##
+- apiGroups:
+  - app.onet.bigtree.space
+  resources:
+  - impresses
+  - impresses/status
+  - impresses/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "jobs"
+- verbs:
+  - "*"
+  apiGroups:
+  - "policy"
+  resources:
+  - "poddisruptionbudgets"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "deployments"
+
+##
+## Rules for app.onet.bigtree.space/v1alpha1, Kind: Meet
+##
+- apiGroups:
+  - app.onet.bigtree.space
+  resources:
+  - meets
+  - meets/status
+  - meets/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - services/finalizers
+  - endpoints
+  - persistentvolumeclaims
+  - events
+  - configmaps
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - daemonsets
+  - replicasets
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+
+# +kubebuilder:scaffold:rules
