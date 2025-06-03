@@ -3,4 +3,8 @@
   version: v1alpha1
   kind: Impress
   chart: helm-charts/docs
+- group: app.onet.bigtree.space
+  version: v1alpha1
+  kind: Meet
+  chart: helm-charts/meet
 # +kubebuilder:scaffold:watch

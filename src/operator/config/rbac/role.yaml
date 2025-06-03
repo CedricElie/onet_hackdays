@@ -89,4 +89,56 @@ rules:
   resources:
   - "deployments"
 
+##
+## Rules for app.onet.bigtree.space/v1alpha1, Kind: Meet
+##
+- apiGroups:
+  - app.onet.bigtree.space
+  resources:
+  - meets
+  - meets/status
+  - meets/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - services/finalizers
+  - endpoints
+  - persistentvolumeclaims
+  - events
+  - configmaps
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - daemonsets
+  - replicasets
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+
 # +kubebuilder:scaffold:rules

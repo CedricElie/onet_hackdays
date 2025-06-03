@@ -3,4 +3,5 @@
 # It should be run by config/default
 resources:
 - bases/app.onet.bigtree.space_impresses.yaml
+- bases/app.onet.bigtree.space_meets.yaml
 # +kubebuilder:scaffold:crdkustomizeresource

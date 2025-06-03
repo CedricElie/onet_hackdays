@@ -17,4 +17,11 @@ resources:
   group: app
   kind: Impress
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: onet.bigtree.space
+  group: app
+  kind: Meet
+  version: v1alpha1
 version: "3"
