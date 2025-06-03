@@ -132,7 +132,12 @@ spec:
 
   celery:
     replicas: 0
-
+  redis:
+    fullnameOverride: "redis"
+    nameOverride: "redis"
+    auth:
+      password: pass
+    architecture: standalone
   postgresql:
     fullnameOverride: "postgresql"
     nameOverride: "postgresql"
