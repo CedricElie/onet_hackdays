@@ -51,10 +51,10 @@ endif
 OPERATOR_SDK_VERSION ?= v1.40.0
 
 # Container tool to use for building and pushing images
-CONTAINER_TOOL ?= nerdctl
+CONTAINER_TOOL ?= docker
 
 # Image URL to use all building/pushing image targets
-IMG ?= fperrier/onet-operator:latest
+IMG ?= controller:latest
 
 .PHONY: all
 all: docker-build

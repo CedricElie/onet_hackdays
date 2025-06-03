@@ -592,6 +592,7 @@ redis:
   auth:
     password: pass
   architecture: standalone
+
 postgresql:
   fullnameOverride: "postgresql"
   nameOverride: "postgresql"

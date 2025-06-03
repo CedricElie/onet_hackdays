@@ -228,6 +228,10 @@ spec:
       externalName: eu.i.posthog.com
       port: 443
       type: ExternalName
+  redis:
+    architecture: standalone
+    auth:
+      password: pass
   serviceMedia:
     annotations: {}
     host: minio.meet.svc.cluster.local
