@@ -588,6 +588,10 @@ celery:
   ## @param celery.pdb.enabled Enable pdb on celery
   pdb:
     enabled: false
+redis: 
+  auth:
+    password: pass
+  architecture: standalone
 
 postgresql:
   fullnameOverride: "postgresql"
