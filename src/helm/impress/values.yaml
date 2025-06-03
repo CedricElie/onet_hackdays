@@ -190,7 +190,7 @@ backend:
   args: []
 
   ## @param backend.replicas Amount of backend replicas
-  replicas: 3
+  replicas: 1
 
   ## @param backend.shareProcessNamespace Enable share process namespace between containers
   shareProcessNamespace: false
@@ -367,7 +367,7 @@ frontend:
   args: []
 
   ## @param frontend.replicas Amount of frontend replicas
-  replicas: 3
+  replicas: 1
 
   ## @param frontend.shareProcessNamespace Enable share process namefrontend between containers
   shareProcessNamespace: false
@@ -536,7 +536,7 @@ yProvider:
   args: []
 
   ## @param yProvider.replicas Amount of yProvider replicas
-  replicas: 3
+  replicas: 1
 
   ## @param yProvider.shareProcessNamespace Enable share process nameyProvider between containers
   shareProcessNamespace: false

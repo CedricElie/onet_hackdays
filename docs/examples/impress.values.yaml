@@ -6,28 +6,29 @@ image:
 backend:
   replicas: 1
   envVars:
-    COLLABORATION_API_URL: https://impress.127.0.0.1.nip.io/collaboration/api/
+    SSL_VERIFY: false
+    COLLABORATION_API_URL: https://impress.onet.bigtree.space/collaboration/api/
     COLLABORATION_SERVER_SECRET: my-secret
-    DJANGO_CSRF_TRUSTED_ORIGINS: https://impress.127.0.0.1.nip.io
+    DJANGO_CSRF_TRUSTED_ORIGINS: https://impress.onet.bigtree.space
     DJANGO_CONFIGURATION: Feature
-    DJANGO_ALLOWED_HOSTS: impress.127.0.0.1.nip.io
+    DJANGO_ALLOWED_HOSTS: impress.onet.bigtree.space
     DJANGO_SERVER_TO_SERVER_API_TOKENS: secret-api-key
     DJANGO_SECRET_KEY: AgoodOrAbadKey
     DJANGO_SETTINGS_MODULE: impress.settings
     DJANGO_SUPERUSER_PASSWORD: admin
     DJANGO_EMAIL_BRAND_NAME: "La Suite Numérique"
     DJANGO_EMAIL_HOST: "mailcatcher"
-    DJANGO_EMAIL_LOGO_IMG: https://impress.127.0.0.1.nip.io/assets/logo-suite-numerique.png
+    DJANGO_EMAIL_LOGO_IMG: https://impress.onet.bigtree.space/assets/logo-suite-numerique.png
     DJANGO_EMAIL_PORT: 1025
     DJANGO_EMAIL_USE_SSL: False
     LOGGING_LEVEL_HANDLERS_CONSOLE: ERROR
     LOGGING_LEVEL_LOGGERS_ROOT: INFO
     LOGGING_LEVEL_LOGGERS_APP: INFO
-    OIDC_OP_JWKS_ENDPOINT: https://keycloak.127.0.0.1.nip.io/realms/impress/protocol/openid-connect/certs
-    OIDC_OP_AUTHORIZATION_ENDPOINT: https://keycloak.127.0.0.1.nip.io/realms/impress/protocol/openid-connect/auth
-    OIDC_OP_TOKEN_ENDPOINT: https://keycloak.127.0.0.1.nip.io/realms/impress/protocol/openid-connect/token
-    OIDC_OP_USER_ENDPOINT: https://keycloak.127.0.0.1.nip.io/realms/impress/protocol/openid-connect/userinfo
-    OIDC_OP_LOGOUT_ENDPOINT: https://keycloak.127.0.0.1.nip.io/realms/impress/protocol/openid-connect/session/end
+    OIDC_OP_JWKS_ENDPOINT: https://keycloak.onet.bigtree.space/realms/impress/protocol/openid-connect/certs
+    OIDC_OP_AUTHORIZATION_ENDPOINT: https://keycloak.onet.bigtree.space/realms/impress/protocol/openid-connect/auth
+    OIDC_OP_TOKEN_ENDPOINT: https://keycloak.onet.bigtree.space/realms/impress/protocol/openid-connect/token
+    OIDC_OP_USER_ENDPOINT: https://keycloak.onet.bigtree.space/realms/impress/protocol/openid-connect/userinfo
+    OIDC_OP_LOGOUT_ENDPOINT: https://keycloak.onet.bigtree.space/realms/impress/protocol/openid-connect/session/end
     OIDC_RP_CLIENT_ID: impress
     OIDC_RP_CLIENT_SECRET: ThisIsAnExampleKeyForDevPurposeOnly
     OIDC_RP_SIGN_ALGO: RS256
@@ -35,12 +36,12 @@ backend:
     OIDC_VERIFY_SSL: False
     OIDC_USERINFO_SHORTNAME_FIELD: "given_name"
     OIDC_USERINFO_FULLNAME_FIELDS: "given_name,usual_name"
-    OIDC_REDIRECT_ALLOWED_HOSTS: https://impress.127.0.0.1.nip.io
+    OIDC_REDIRECT_ALLOWED_HOSTS: https://impress.onet.bigtree.space
     OIDC_AUTH_REQUEST_EXTRA_PARAMS: "{'acr_values': 'eidas1'}"
-    LOGIN_REDIRECT_URL: https://impress.127.0.0.1.nip.io
-    LOGIN_REDIRECT_URL_FAILURE: https://impress.127.0.0.1.nip.io
-    LOGOUT_REDIRECT_URL: https://impress.127.0.0.1.nip.io
-    POSTHOG_KEY: "{'id': 'posthog_key', 'host': 'https://product.impress.127.0.0.1.nip.io'}"
+    LOGIN_REDIRECT_URL: https://impress.onet.bigtree.space
+    LOGIN_REDIRECT_URL_FAILURE: https://impress.onet.bigtree.space
+    LOGOUT_REDIRECT_URL: https://impress.onet.bigtree.space
+    POSTHOG_KEY: "{'id': 'posthog_key', 'host': 'https://product.impress.onet.bigtree.space'}"
     DB_HOST: postgresql
     DB_NAME: impress
     DB_USER: dinum
@@ -83,23 +84,23 @@ backend:
     restartPolicy: Never
 
   # Extra volume to manage our local custom CA and avoid to set ssl_verify: false
-  extraVolumeMounts:
-    - name: certs
-      mountPath: /usr/local/lib/python3.12/site-packages/certifi/cacert.pem
-      subPath: cacert.pem
+  # extraVolumeMounts:
+  #   - name: certs
+  #     mountPath: /usr/local/lib/python3.12/site-packages/certifi/cacert.pem
+  #     subPath: cacert.pem
 
   # Extra volume to manage our local custom CA and avoid to set ssl_verify: false
-  extraVolumes:
-    - name: certs
-      configMap:
-        name: certifi
-        items:
-        - key: cacert.pem
-          path: cacert.pem
+  # extraVolumes:
+  #   - name: certs
+  #     configMap:
+  #       name: certifi
+  #       items:
+  #       - key: cacert.pem
+  #         path: cacert.pem
 frontend:
   envVars:
     PORT: 8080
-    NEXT_PUBLIC_API_ORIGIN: https://impress.127.0.0.1.nip.io
+    NEXT_PUBLIC_API_ORIGIN: https://impress.onet.bigtree.space
 
   replicas: 1
 
@@ -118,7 +119,7 @@ yProvider:
 
   envVars:
     COLLABORATION_LOGGING: true
-    COLLABORATION_SERVER_ORIGIN: https://impress.127.0.0.1.nip.io
+    COLLABORATION_SERVER_ORIGIN: https://impress.onet.bigtree.space
     COLLABORATION_SERVER_SECRET: my-secret
     Y_PROVIDER_API_KEY: my-secret
 
@@ -130,32 +131,58 @@ posthog:
 
 ingress:
   enabled: true
-  host: impress.127.0.0.1.nip.io
+  host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 ingressCollaborationWS:
   enabled: true
-  host: impress.127.0.0.1.nip.io
+  host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-collab-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
   
   annotations:
-    nginx.ingress.kubernetes.io/auth-url: https://impress.127.0.0.1.nip.io/api/v1.0/documents/collaboration-auth/
+    nginx.ingress.kubernetes.io/auth-url: https://impress.onet.bigtree.space/api/v1.0/documents/collaboration-auth/
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 ingressCollaborationApi:
   enabled: true
-  host: impress.127.0.0.1.nip.io
+  host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-collab-api-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 ingressAdmin:
   enabled: true
-  host: impress.127.0.0.1.nip.io
+  host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-admin-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 ingressMedia:
   enabled: true
-  host: impress.127.0.0.1.nip.io
+  host: impress.onet.bigtree.space
+  tls:
+    enabled: true
+    secretName: impress-media-tls
+  enabled: true
 
   annotations:
-    nginx.ingress.kubernetes.io/auth-url: https://impress.127.0.0.1.nip.io/api/v1.0/documents/media-auth/
+    nginx.ingress.kubernetes.io/auth-url: https://impress.onet.bigtree.space/api/v1.0/documents/media-auth/
     nginx.ingress.kubernetes.io/auth-response-headers: "Authorization, X-Amz-Date, X-Amz-Content-SHA256"
     nginx.ingress.kubernetes.io/upstream-vhost: minio.impress.svc.cluster.local:9000
     nginx.ingress.kubernetes.io/rewrite-target: /impress-media-storage/$1
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 serviceMedia:
   host: minio.impress.svc.cluster.local
